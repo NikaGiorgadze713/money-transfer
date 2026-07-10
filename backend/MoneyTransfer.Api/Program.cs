@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MoneyTransfer.Api.Data;
 using MoneyTransfer.Api.Models;
+using MoneyTransfer.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+builder.Services.AddScoped<TransferService>();
 
 var app = builder.Build();
 
