@@ -1,6 +1,6 @@
 # Money Transfer
 
-A simulated money transfer application. It lets a fixed set of demo accounts send funds to one another and keeps a full transaction history. There is no real banking, authentication, or external payment integration involved — it exists purely to demonstrate a correctly implemented transfer flow (validation, atomicity, and concurrency safety) end to end, from database to UI.
+A simulated money transfer application. It lets a fixed set of demo accounts send funds to one another and keeps a full transaction history. There is no real banking, authentication, or external payment integration involved, it exists purely to demonstrate a correctly implemented transfer flow (validation, atomicity, and concurrency safety) end to end, from database to UI.
 
 ## Tech Stack
 
@@ -15,7 +15,7 @@ A simulated money transfer application. It lets a fixed set of demo accounts sen
 
 - Docker (with Docker Compose)
 
-No other tools, runtimes, or package managers are required on the host machine — everything builds and runs inside containers.
+No other tools, runtimes, or package managers are required on the host machine, everything builds and runs inside containers.
 
 ## Running the App
 
