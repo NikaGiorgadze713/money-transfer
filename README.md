@@ -4,12 +4,12 @@ A simulated money transfer application. It lets a fixed set of demo accounts sen
 
 ## Tech Stack
 
-- **.NET 8 Web API** — backend REST API
-- **Entity Framework Core** — data access and schema management
-- **Microsoft SQL Server 2022** — relational database
-- **React + Vite** — frontend single-page application
-- **nginx** — serves the built frontend and proxies API requests
-- **Docker Compose** — orchestrates all three services
+- **.NET 8 Web API** - backend REST API
+- **Entity Framework Core** - data access and schema management
+- **Microsoft SQL Server 2022** - relational database
+- **React + Vite** - frontend single-page application
+- **nginx** - serves the built frontend and proxies API requests
+- **Docker Compose** - orchestrates all three services
 
 ## Prerequisites
 
@@ -101,13 +101,13 @@ Request body:
 }
 ```
 
-Successful response — `200 OK`:
+Successful response - `200 OK`:
 
 ```json
 { "message": "Transfer completed successfully." }
 ```
 
-Error response — `400 Bad Request` (also returned for a nonexistent account, an amount that isn't positive, or a same-account transfer):
+Error response - `400 Bad Request` (also returned for a nonexistent account, an amount that isn't positive, or a same-account transfer):
 
 ```json
 { "message": "Insufficient funds." }
@@ -117,6 +117,6 @@ Error response — `400 Bad Request` (also returned for a nonexistent account, a
 
 A transfer touches two account balances and inserts a transaction record, so it has to be all-or-nothing and safe when multiple transfers happen at the same time. This is enforced at three layers:
 
-1. **Atomicity** — the balance updates and the transaction insert all happen inside a single database transaction. If any step fails, the whole transfer is rolled back, so an account can never be debited without the corresponding credit (or vice versa).
-2. **Concurrency safety** — before modifying balances, both account rows are locked (`UPDLOCK`) in a deterministic order based on account id, regardless of which account is the sender or receiver. This serializes concurrent transfers that touch a shared account and prevents deadlocks that could otherwise occur if two simultaneous transfers locked the same pair of rows in opposite order.
-3. **Database-level safety net** — a `CHECK` constraint on the `Accounts` table enforces `Balance >= 0` independently of the application logic. Even if a bug slipped past the service-layer validation, the database itself would reject any write that leaves an account with a negative balance.
+1. **Atomicity** - the balance updates and the transaction insert all happen inside a single database transaction. If any step fails, the whole transfer is rolled back, so an account can never be debited without the corresponding credit (or vice versa).
+2. **Concurrency safety** - before modifying balances, both account rows are locked (`UPDLOCK`) in a deterministic order based on account id, regardless of which account is the sender or receiver. This serializes concurrent transfers that touch a shared account and prevents deadlocks that could otherwise occur if two simultaneous transfers locked the same pair of rows in opposite order.
+3. **Database-level safety net** - a `CHECK` constraint on the `Accounts` table enforces `Balance >= 0` independently of the application logic. Even if a bug slipped past the service-layer validation, the database itself would reject any write that leaves an account with a negative balance.
